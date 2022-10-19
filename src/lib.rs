@@ -1,6 +1,6 @@
 mod ftpd;
-mod logger;
 
+use an_logger::init_logger_for_log_write;
 use ftpd::start_server;
 use jni::objects::JObject;
 use jni::objects::JString;
@@ -47,7 +47,7 @@ pub extern "C" fn Java_com_atstudio_denort_utils_Ftpd_00024Companion_init(
     _env: JNIEnv,
     _thiz: JObject,
 ) {
-    logger::init_logger();
+    init_logger_for_log_write("FtpdLib");
 }
 
 #[no_mangle]
