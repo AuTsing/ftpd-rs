@@ -1,9 +1,12 @@
 use android_logger::Config;
 use log::Level;
-use std::ffi::{CStr, CString};
+use std::ffi::CStr;
+use std::ffi::CString;
 use std::fs::File;
-use std::io::{BufRead, BufReader};
-use std::os::unix::prelude::{FromRawFd, RawFd};
+use std::io::BufRead;
+use std::io::BufReader;
+use std::os::unix::prelude::FromRawFd;
+use std::os::unix::prelude::RawFd;
 use std::thread;
 
 #[cfg(target_os = "android")]
