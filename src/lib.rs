@@ -48,7 +48,7 @@ pub extern "C" fn Java_com_atstudio_denort_utils_Ftpd_00024Companion_init(
     _thiz: JObject,
 ) {
     #[cfg(debug_assertions)]
-    init_logger_for_log_write("FtpdLib");
+    init_logger_for_log_write(b"FtpdLib\0");
 }
 
 #[no_mangle]
