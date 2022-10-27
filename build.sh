@@ -7,11 +7,13 @@ export CARGO_TARGET_AARCH64_LINUX_ANDROID_LINKER=$CC
 if [[ "$1" =~ "release" ]]; then
     echo "build release"
     cargo build --target aarch64-linux-android --release
+    echo "copying file..."
+    cp ./target/aarch64-linux-android/release/libftpd.so ~/OneDrive/Gits/Java/Denort/app/src/main/jniLibs/arm64-v8a/
 else
     echo "build debug"
     cargo build --target aarch64-linux-android
+    echo "copying file..."
+    cp ./target/aarch64-linux-android/debug/libftpd.so ~/OneDrive/Gits/Java/Denort/app/src/main/jniLibs/arm64-v8a/
 fi
 
-echo "copying file..."
-cp ./target/aarch64-linux-android/debug/libftpd.so ~/OneDrive/Gits/Java/Denort/app/src/main/jniLibs/arm64-v8a/
 echo "done."
