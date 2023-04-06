@@ -36,6 +36,11 @@ fn set_exception(env: &mut JNIEnv, thiz: &JObject, message: String) {
     .unwrap();
 }
 
+fn set_running(env: &mut JNIEnv, thiz: &JObject, running: bool) {
+    env.call_method(thiz, "updateRunning", "(Z)V", &[JValue::from(running)])
+        .unwrap();
+}
+
 #[no_mangle]
 pub extern "C" fn Java_com_atstudio_denort_utils_Ftpd_00024Companion_init(
     _env: JNIEnv,
@@ -76,6 +81,8 @@ pub extern "C" fn Java_com_atstudio_denort_utils_Ftpd_run(
         tx.send(run_result).await.unwrap();
     };
 
+    set_running(&mut env, &thiz, true);
+
     let result = rt.block_on(async {
         tokio::spawn(future);
         rx.recv().await.unwrap()
@@ -84,10 +91,12 @@ pub extern "C" fn Java_com_atstudio_denort_utils_Ftpd_run(
     match result {
         Ok(_) => {
             set_exit_code(&mut env, &thiz, 0);
+            set_running(&mut env, &thiz, false);
         }
         Err(e) => {
             set_exit_code(&mut env, &thiz, 1);
             set_exception(&mut env, &thiz, format!("{:?}", e));
+            set_running(&mut env, &thiz, false);
         }
     }
 
